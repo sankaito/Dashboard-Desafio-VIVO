@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # ======================================
-# CONFIGURAÇÃO PÁGINA
+# CONFIGURAÇÃO DA PÁGINA
 # ======================================
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # ======================================
-# CSS
+# CSS CUSTOMIZADO
 # ======================================
 
 st.markdown("""
@@ -77,11 +77,11 @@ df["status"] = df["dias_atraso"].apply(
     lambda x: "Atrasada" if x > 0 else "No Prazo"
 )
 
-##################################
+# ======================================
 # CABEÇALHO
-##################################
+# ======================================
 
-st.title(" Dashboard de Monitoramento Logístico")
+st.title("🚚 Dashboard de Monitoramento Logístico")
 
 st.markdown(
 """
@@ -92,9 +92,9 @@ identificando atrasos, regiões críticas e desempenho das transportadoras.
 
 st.divider()
 
-##################################
+# ======================================
 # FILTROS
-##################################
+# ======================================
 
 st.sidebar.title("🔎 Filtros")
 
@@ -122,9 +122,9 @@ df_filtrado = df[
     & (df["status"].isin(status))
 ]
 
-##################################
+# ======================================
 # KPIs
-##################################
+# ======================================
 
 total = len(df_filtrado)
 
@@ -154,9 +154,9 @@ c5.metric("Maior Atraso", f"{maior_atraso} dias")
 
 st.divider()
 
-##################################
+# ======================================
 # GRÁFICOS
-##################################
+# ======================================
 
 col1, col2 = st.columns(2)
 
@@ -174,7 +174,7 @@ with col1:
         x="regiao",
         y="Quantidade",
         color="Quantidade",
-        title="📍 Atrasos por Região",
+        title=" Atrasos por Região",
         text_auto=True,
         color_continuous_scale="Reds"
     )
@@ -200,18 +200,18 @@ with col2:
         x="transportadora",
         y="Quantidade",
         color="Quantidade",
-        title="🚛 Comparação entre Transportadoras",
+        title=" Comparação entre Transportadoras",
         text_auto=True,
         color_continuous_scale="Blues"
     )
 
     st.plotly_chart(fig_transp, width="stretch")
 
-##################################
+# ======================================
 # RANKING
-##################################
+# ======================================
 
-st.subheader(" Ranking de entregas mais críticas")
+st.subheader(" Ranking das entregas mais críticas")
 
 ranking = (
     df_filtrado[df_filtrado["dias_atraso"] > 0]
@@ -233,9 +233,9 @@ st.dataframe(
     width="stretch"
 )
 
-##################################
+# ======================================
 # TABELA COMPLETA
-##################################
+# ======================================
 
 st.subheader("📋 Detalhamento")
 
@@ -269,7 +269,7 @@ st.dataframe(
 
 st.divider()
 
-st.subheader("📈 Insights")
+st.subheader("📈 Insight")
 
 if len(ranking) > 0:
 
@@ -292,17 +292,17 @@ if len(ranking) > 0:
 else:
 
     st.success(
-        "Nenhuma entrega atrasada."
+        "Nenhuma entrega atrasada encontrada."
     )
 
-##################################
+# ======================================
 # RODAPÉ
-##################################
+# ======================================
 
 st.markdown("---")
 
 st.caption(
-    "Dashboard desenvolvido para monitoramento logístico."
+    "Dashboard desenvolvido para monitoramento logístico e apoio à tomada de decisão."
 )
 
 st.markdown("---")
